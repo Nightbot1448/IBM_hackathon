@@ -1,70 +1,49 @@
-<html>  
+<html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"type="text/javascript" charset="utf-8"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"type="text/javascript" charset="utf-8"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-data.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css"href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-data.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
 </head>
-  
+
 <body style='margin: 0'>
 <div style="width: 50%; height: 50%; margin: 0 auto; margin-top:15%" id="mapContainer"></div>
 
-<script>	
-      // Initialize the platform object:
-      var platform = new H.service.Platform({
+<script>
+    var platform = new H.service.Platform({
         'apikey': '{{apikey}}'
-      });
+    });
 
-	   const lat = 41.24098;
-	   const long = -102.24019;
-	
-	// Obtain the default map types from the platform object
-      var maptypes = platform.createDefaultLayers();
+    const lat = 41.24098;
+    const long = -102.24019;
 
-      // Initialize a map:
-      var map = new H.Map(
+    var maptypes = platform.createDefaultLayers();
+    var map = new H.Map(
         document.getElementById('mapContainer'),
         maptypes.raster.terrain.map,
         {
-          zoom: 4,
-          center: { lat: lat, lng: long }  
+            zoom: 4,
+            center: {lat: lat, lng: long}
         });
-  var reader = new H.data.geojson.Reader('{{ url_for("static", filename="states.json") }}');
-  reader.parse();	
-	// Enable the event system on the map instance:
-	  var mapEvents = new H.mapevents.MapEvents(map);
-	
-	// Add event listener:
-	  map.addEventListener('tap', function(evt) {
-    // Log 'tap' and 'mouse' events:
-      console.log(evt.type, evt.currentPointer.type); 
-});
 
-	// Instantiate the default behavior, providing the mapEvents object:
-	 var behavior = new H.mapevents.Behavior(mapEvents);
+    var reader = new H.data.geojson.Reader('{{ url_for("static", filename="states.json") }}');
+    reader.parse();
+    var mapEvents = new H.mapevents.MapEvents(map);
+    map.addEventListener('tap', function (evt) {
+        var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
+        console.log(coord);
+    });
 
-	//window.addEventListener('resize',()=> get.ViewProt().resize())
-	//var marker = new H.map.Marker({ lat: lat, lng: long });
-		
-	// Add the marker to the map:
+    var behavior = new H.mapevents.Behavior(mapEvents);
+    var ui = H.ui.UI.createDefault(map, maptypes);
 
-  
-	//map.addObject(marker);
-	
-	// Create the default UI:
-	var ui = H.ui.UI.createDefault(map, maptypes);
-		
-// Create an info bubble object at a specific geographic location:
-/*var bubble = new H.ui.InfoBubble({ lng: 76.0534, lat: 22.9676 }, {
-                content: '<b>Dewas</b>'
-             });*/
+    layer = reader.getLayer();
 
-// Add info bubble to the UI:
-//ui.addBubble(bubble);
-map.addLayer(reader.getLayer());
+    map.addLayer(layer);
+
 </script>
 </body>
 </html>
