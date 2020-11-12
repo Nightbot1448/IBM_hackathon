@@ -2,7 +2,8 @@ import os
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
+
 
 HERE_API_KEY = os.getenv('HERE_API_KEY')
 
@@ -27,7 +28,7 @@ def func1():
     if mask.any():
         resp = merged[mask].iloc[0, merged.columns != 'geometry']
         resp['clust'] = int(resp['clust'])
-        return resp.to_dict()
+        return render_template('test.html', state_data=resp.to_dict())
     else:
         return 'Not a State'
 
