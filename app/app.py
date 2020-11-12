@@ -20,12 +20,16 @@ def map_func():
 @app.route('/tapped', methods=['POST'])
 def func1():
     data = request.get_json()
-    print(data)
+    #print(data)
     tap = Point(float(data.get('lng')), float(data.get('lat')))
-    resp = merged[merged.geometry.map(tap.within)].iloc[0, merged.columns != 'geometry']
-    resp['clust'] = int(resp['clust'])
-    print(resp)
-    return resp.to_dict()
+    mask = merged.geometry.map(tap.within)    
+    #print(resp)
+    if mask.any():
+        resp = merged[mask].iloc[0, merged.columns != 'geometry']
+        resp['clust'] = int(resp['clust'])
+        return resp.to_dict()
+    else:
+        return 'Not a State'
 
 
 if __name__ == "__main__":
