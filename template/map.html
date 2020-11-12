@@ -17,7 +17,7 @@
       var platform = new H.service.Platform({
         'apikey': '{{apikey}}'
       });
-	  
+
 	   const lat = 41.24098;
 	   const long = -102.24019;
 	
@@ -32,7 +32,7 @@
           zoom: 4,
           center: { lat: lat, lng: long }  
         });
-  var reader = new H.data.geojson.Reader('{{ url_for("static", filename="states.geojson") }}');
+  var reader = new H.data.geojson.Reader('{{ url_for("static", filename="states.json") }}');
   reader.parse();	
 	// Enable the event system on the map instance:
 	  var mapEvents = new H.mapevents.MapEvents(map);
@@ -47,23 +47,23 @@
 	 var behavior = new H.mapevents.Behavior(mapEvents);
 
 	//window.addEventListener('resize',()=> get.ViewProt().resize())
-	var marker = new H.map.Marker({ lat: lat, lng: long });
+	//var marker = new H.map.Marker({ lat: lat, lng: long });
 		
 	// Add the marker to the map:
 
   
-	map.addObject(marker);
+	//map.addObject(marker);
 	
 	// Create the default UI:
 	var ui = H.ui.UI.createDefault(map, maptypes);
 		
 // Create an info bubble object at a specific geographic location:
-var bubble = new H.ui.InfoBubble({ lng: 76.0534, lat: 22.9676 }, {
+/*var bubble = new H.ui.InfoBubble({ lng: 76.0534, lat: 22.9676 }, {
                 content: '<b>Dewas</b>'
-             });
+             });*/
 
 // Add info bubble to the UI:
-ui.addBubble(bubble);
+//ui.addBubble(bubble);
 map.addLayer(reader.getLayer());
 </script>
 </body>
