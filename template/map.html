@@ -4,6 +4,7 @@
 <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"type="text/javascript" charset="utf-8"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"type="text/javascript" charset="utf-8"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-data.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
 <link rel="stylesheet" type="text/css"href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
 </head>
@@ -17,8 +18,8 @@
         'apikey': '{{apikey}}'
       });
 	  
-	   const lat = 22.719568;
-	   const long = 75.857727;
+	   const lat = 41.24098;
+	   const long = -102.24019;
 	
 	// Obtain the default map types from the platform object
       var maptypes = platform.createDefaultLayers();
@@ -28,10 +29,11 @@
         document.getElementById('mapContainer'),
         maptypes.raster.terrain.map,
         {
-          zoom: 10,
+          zoom: 4,
           center: { lat: lat, lng: long }  
         });
-		
+  var reader = new H.data.geojson.Reader('{{ url_for("static", filename="states.geojson") }}');
+  reader.parse();	
 	// Enable the event system on the map instance:
 	  var mapEvents = new H.mapevents.MapEvents(map);
 	
@@ -48,6 +50,8 @@
 	var marker = new H.map.Marker({ lat: lat, lng: long });
 		
 	// Add the marker to the map:
+
+  
 	map.addObject(marker);
 	
 	// Create the default UI:
@@ -60,7 +64,7 @@ var bubble = new H.ui.InfoBubble({ lng: 76.0534, lat: 22.9676 }, {
 
 // Add info bubble to the UI:
 ui.addBubble(bubble);
-
+map.addLayer(reader.getLayer());
 </script>
 </body>
 </html>
