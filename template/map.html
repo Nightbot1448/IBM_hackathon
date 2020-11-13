@@ -23,46 +23,47 @@
     <div>
         <div class="row" style="height: 85.5%; width:99%;margin-top:5%">
             <div class="col-4">
-                <div class="container col-10 col-offset-1" id="form">
-                    <form class="form-inline">
+                <div class="container col-10 col-offset-1">
+                    <form class="form-inline" id="form">
                         <div class="btn-group mb-2">
                             <input type="text" readonly class="form-control-plaintext" value="Clear_Days">
-                            <input type="number" max='366' min='0' step='1' tabindex='1' class="form-control" id="input_cleardays">
+                            <input type="number" required max='366' min='0' step='1' tabindex='1' class="form-control" id="input_cleardays">
                         </div>
                         <div class="btn-group mb-2">
                             <input type="text" readonly class="form-control-plaintext" value="mPS(20m)">
-                            <input type="number" max='50' min='0' step='0.1' tabindex='2' class="form-control" id="input_mps">
+                            <input type="number" required max='50' min='0' step='0.1' tabindex='2' class="form-control" id="input_mps">
                         </div>
                         <div class="btn-group mb-2">
                             <input type="text" readonly class="form-control-plaintext" value="Petroleum-Fired(%)">
-                            <input type="number" max='100' min='0' step='0.1' tabindex='3' class="form-control" id="input_petroleum">
+                            <input type="number" required max='100' min='0' step='0.1' tabindex='3' class="form-control" id="input_petroleum">
                         </div>
                         <div class="btn-group mb-2">
                             <input type="text" readonly class="form-control-plaintext" value="Natural_Gas-Fired(%)">
-                            <input type="number" max='100' min='0' step='0.1' tabindex='4' class="form-control" id="input_gas">
+                            <input type="number" required max='100' min='0' step='0.1' tabindex='4' class="form-control" id="input_gas">
                         </div>
                         <div class="btn-group mb-2">
                             <input type="text" readonly class="form-control-plaintext" value="Coal-Fired(%)">
-                            <input type="number" max='100' min='0' step='0.1' tabindex='5' class="form-control" id="input_coal">
+                            <input type="number" required max='100' min='0' step='0.1' tabindex='5' class="form-control" id="input_coal">
                         </div>
                         <div class="btn-group mb-2">
                             <input type="text" readonly class="form-control-plaintext" value="Nuclear(%)">
-                            <input type="number" max='100' min='0' step='0.1' tabindex='6' class="form-control" id="input_nuclear">
+                            <input type="number" required max='100' min='0' step='0.1' tabindex='6' class="form-control" id="input_nuclear">
                         </div>
                         <div class="btn-group mb-2">
                             <input type="text" readonly class="form-control-plaintext" value="Renewables(%)">
-                            <input type="number" max='100' min='0' step='0.1' tabindex='7' class="form-control" id="input_renewables">
+                            <input type="number" required max='100' min='0' step='0.1' tabindex='7' class="form-control" id="input_renewables">
                         </div>
 
                         <div class="row">
-                            <div class="col"><button type="submit" class="btn btn-secondary mb-2">Example#1</button>
+                            <div class="col"><button type="button" class="btn btn-secondary mb-2">Example#1</button>
                             </div>
-                            <div class="col"><button type="submit" class="btn btn-secondary mb-2">Example#2</button>
+                            <div class="col"><button type="button" class="btn btn-secondary mb-2">Example#2</button>
                             </div>
-                            <div class="col"><button type="submit" tabindex='8' class="btn btn-primary mb-2">Predict</button></div>
+                            <div class="col"><button type="button" tabindex='8' class="btn btn-primary mb-2" id='submit'>Predict</button></div>
                         </div>
                     </form>
                 </div>
+                <div class="container" id="resultContainer"></div>
                 <div class="container" id="statsContainer"></div>
             </div>
             <div class="col-8">
@@ -95,7 +96,7 @@
         var mapEvents = new H.mapevents.MapEvents(map);
         map.addEventListener('tap', function (evt) {
             var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
-            console.log(coord);
+            //console.log(coord);
             var lat = coord.lat.toString();
             var lng = coord.lng.toString();
 
@@ -105,7 +106,7 @@
 
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log(xhr.responseText);
+                    //console.log(xhr.responseText);
                     document.getElementById('statsContainer').innerHTML = xhr.responseText
                 }
             }
@@ -125,6 +126,37 @@
         layer = reader.getLayer();
 
         map.addLayer(layer);
+        
+        document.getElementById('submit').onclick = (event) => {
+            input_data = [
+                document.getElementById('input_cleardays').value,
+                document.getElementById('input_mps').value,
+                document.getElementById('input_petroleum').value,
+                document.getElementById('input_gas').value,
+                document.getElementById('input_coal').value,
+                document.getElementById('input_nuclear').value,
+                document.getElementById('input_renewables').value
+            ]
+
+            if (document.getElementById('form').checkValidity() && ((parseInt(input_data[2])+parseInt(input_data[3])+parseInt(input_data[4])+parseInt(input_data[5])+parseInt(input_data[6]))< 105) && ((parseInt(input_data[2])+parseInt(input_data[3])+parseInt(input_data[4])+parseInt(input_data[5])+parseInt(input_data[6]))> 95)){
+                var xhr2 = new XMLHttpRequest();
+                xhr2.open('POST', 'submitted', true);
+                xhr2.setRequestHeader('Content-Type', 'application/json');
+
+                xhr2.onreadystatechange = () => {
+                    if (xhr2.readyState == 4 && xhr2.status == 200) {
+                        //console.log(xhr2.responseText);
+                        document.getElementById('resultContainer').innerHTML = xhr2.responseText
+                    }
+                }
+                xhr2.send(JSON.stringify(input_data));
+            }
+            else {
+                alert('Form was filled wrong')
+            }
+            
+
+        }
 
     </script>
 </body>
