@@ -138,7 +138,7 @@
                 document.getElementById('input_renewables').value
             ]
 
-            if (document.getElementById('form').checkValidity() && ((parseInt(input_data[2])+parseInt(input_data[3])+parseInt(input_data[4])+parseInt(input_data[5])+parseInt(input_data[6]))< 105) && ((parseInt(input_data[2])+parseInt(input_data[3])+parseInt(input_data[4])+parseInt(input_data[5])+parseInt(input_data[6]))> 95)){
+            if (document.getElementById('form').checkValidity() && ((parseFloat(input_data[2])+parseFloat(input_data[3])+parseFloat(input_data[4])+parseFloat(input_data[5])+parseFloat(input_data[6]))< 105) && ((parseFloat(input_data[2])+parseFloat(input_data[3])+parseFloat(input_data[4])+parseFloat(input_data[5])+parseFloat(input_data[6]))> 95)){
                 var xhr2 = new XMLHttpRequest();
                 xhr2.open('POST', 'submitted', true);
                 xhr2.setRequestHeader('Content-Type', 'application/json');
