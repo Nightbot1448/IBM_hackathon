@@ -32,8 +32,14 @@
                 <td>{{response_scoring['mPS(20m)']}}</td>
             </tr>
             <tr>
-                <td>Clust</td>
-                <td>{{response_scoring.clust}}</td>
+                <td>Feasibility</td>
+                <td>
+                    {% if (response_scoring.clust == 1) %}
+                        True
+                    {% else %}
+                        False
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <td>Probability</td>
@@ -41,4 +47,5 @@
             </tr>
         </tbody>
     </table>
+
 </div>

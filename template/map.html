@@ -55,9 +55,9 @@
                         </div>
 
                         <div class="row">
-                            <div class="col"><button type="button" class="btn btn-secondary mb-2">Example#1</button>
+                            <div class="col"><button type="button" class="btn btn-secondary mb-2" id='Example1'>Example#1</button>
                             </div>
-                            <div class="col"><button type="button" class="btn btn-secondary mb-2">Example#2</button>
+                            <div class="col"><button type="button" class="btn btn-secondary mb-2" id='Example2'>Example#2</button>
                             </div>
                             <div class="col"><button type="button" tabindex='8' class="btn btn-primary mb-2" id='submit'>Predict</button></div>
                         </div>
@@ -130,7 +130,9 @@
         
         document.getElementById('submit').onclick = (event) => {
             
-            
+            event.srcElement.innerHTML = '<div class="col"><span class="spinner-border" role="status" aria-hidden="true"></span></div>'
+            event.srcElement.disabled = true
+
             input_data = [
                 document.getElementById('input_cleardays').value,
                 document.getElementById('input_mps').value,
@@ -151,6 +153,9 @@
                         //console.log(xhr2.responseText);
                         document.getElementById('statsContainer').innerHTML = ''
                         document.getElementById('resultContainer').innerHTML = xhr2.responseText
+                        event.srcElement.innerHTML = 'Predict'
+                        event.srcElement.disabled = false
+
                     }
                 }
                 xhr2.send(JSON.stringify(input_data));
@@ -158,9 +163,28 @@
             else {
                 alert('Form was filled wrong')
             }
-            
-
         }
+
+        document.getElementById('Example1').onclick = (event) => {
+            document.getElementById('input_cleardays').value = 100
+            document.getElementById('input_mps').value = 10
+            document.getElementById('input_petroleum').value = 0
+            document.getElementById('input_gas').value = 80
+            document.getElementById('input_coal').value = 20
+            document.getElementById('input_nuclear').value = 0 
+            document.getElementById('input_renewables').value = 0
+        }
+
+        document.getElementById('Example2').onclick = (event) => {
+            document.getElementById('input_cleardays').value = 10
+            document.getElementById('input_mps').value = 30
+            document.getElementById('input_petroleum').value = 0
+            document.getElementById('input_gas').value = 10
+            document.getElementById('input_coal').value = 10
+            document.getElementById('input_nuclear').value = 0 
+            document.getElementById('input_renewables').value = 80
+        }
+
 
     </script>
 </body>
