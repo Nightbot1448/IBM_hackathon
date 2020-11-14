@@ -7,7 +7,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr data-toggle="tooltip" data-delay='0' title="Red - there is no point in increasing the number of solar power plants, Green is opposite">
                 <td>
                     {% if (response_scoring.clust == 1) and (response_scoring.Clear_Days > 60) %}
                         <font color='green'>Clear Days</font>
@@ -19,7 +19,7 @@
                 </td>
                 <td>{{response_scoring.Clear_Days}}</td>
             </tr>
-            <tr>
+            <tr data-toggle="tooltip" data-delay='0' title="Red - there is no point in increasing the number of wind farms plants, Green is opposite">
                 <td>
                     {% if (response_scoring.clust == 1) and (response_scoring['mPS(20m)'] > 12) %}
                         <font color='green'>Wind speed(20m)</font>
@@ -31,7 +31,7 @@
                 </td>
                 <td>{{response_scoring['mPS(20m)']}}</td>
             </tr>
-            <tr>
+            <tr data-toggle="tooltip" data-delay='0' title="Feasibility of increasing renewables power plants">
                 <td>Feasibility</td>
                 <td>
                     {% if (response_scoring.clust == 1) %}
@@ -41,7 +41,7 @@
                     {% endif %}
                 </td>
             </tr>
-            <tr>
+            <tr data-toggle="tooltip" data-delay='0' title="Likelihood of classification">
                 <td>Probability</td>
                 <td>{{response_scoring.probability}}</td>
             </tr>
