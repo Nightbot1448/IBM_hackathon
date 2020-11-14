@@ -69,8 +69,16 @@ def func2():
     scoring = response_scoring.json()
     scoring['predictions'][0]['values'][0][1][0] = scoring['predictions'][0]['values'][0][1][0].__round__(3)
     print(scoring['predictions'][0]['values'][0][1][0])
-    # print(resp)
-    return render_template('model_result.html', response_scoring=scoring['predictions'][0]['values'][0])
+    clust = int(scoring['predictions'][0]['values'][0][0])
+    print('clust:', clust)
+    res = {
+        'Clear_Days': int(data[0]),
+        'mPS(20m)': float(data[1]),
+        'clust': clust,
+        'probability': scoring['predictions'][0]['values'][0][1][clust].__round__(3)
+    }
+    print(res)
+    return render_template('model_result.html', response_scoring=res)
 
 
 if __name__ == "__main__":

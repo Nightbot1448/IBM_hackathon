@@ -107,6 +107,7 @@
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     //console.log(xhr.responseText);
+                    document.getElementById('resultContainer').innerHTML = ''
                     document.getElementById('statsContainer').innerHTML = xhr.responseText
                 }
             }
@@ -128,6 +129,8 @@
         map.addLayer(layer);
         
         document.getElementById('submit').onclick = (event) => {
+            
+            
             input_data = [
                 document.getElementById('input_cleardays').value,
                 document.getElementById('input_mps').value,
@@ -146,6 +149,7 @@
                 xhr2.onreadystatechange = () => {
                     if (xhr2.readyState == 4 && xhr2.status == 200) {
                         //console.log(xhr2.responseText);
+                        document.getElementById('statsContainer').innerHTML = ''
                         document.getElementById('resultContainer').innerHTML = xhr2.responseText
                     }
                 }

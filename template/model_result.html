@@ -1,4 +1,44 @@
-<div>
-    {{response_scoring[0]}}<br>
-    Probability - {{response_scoring[1][0]}}
+<div class="table-responsive">
+    <table class="table table-striped" style="overflow-x: hidden;">
+        <thead style="width:100%">
+            <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {% if (response_scoring.clust == 1) and (response_scoring.Clear_Days > 60) %}
+                        <font color='green'>Clear Days</font>
+                    {% elif (response_scoring.clust == 1) %}
+                        <font color='red'>Clear Days</font>
+                    {% else %}
+                        Clear Days
+                    {% endif %}
+                </td>
+                <td>{{response_scoring.Clear_Days}}</td>
+            </tr>
+            <tr>
+                <td>
+                    {% if (response_scoring.clust == 1) and (response_scoring['mPS(20m)'] > 12) %}
+                        <font color='green'>Wind speed(20m)</font>
+                    {% elif (response_scoring.clust == 1) %}
+                        <font color='red'>Wind speed(20m)</font>
+                    {% else %}
+                        Wind speed(20m)
+                    {% endif %}
+                </td>
+                <td>{{response_scoring['mPS(20m)']}}</td>
+            </tr>
+            <tr>
+                <td>Clust</td>
+                <td>{{response_scoring.clust}}</td>
+            </tr>
+            <tr>
+                <td>Probability</td>
+                <td>{{response_scoring.probability}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
