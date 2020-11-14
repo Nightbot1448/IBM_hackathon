@@ -29,7 +29,7 @@ With fairly complete statistics on the US energy sector, we have developed a kin
 
 ## Demo video
 
-[![Watch the video](https://github.com/Code-and-Response/Liquid-Prep/blob/master/images/IBM-interview-video-image.png)](https://youtu.be/vOgCOoy_Bx0)
+[![Watch the video]](https://youtu.be/QUhsbyq5T0s)
 
 ## Project roadmap
 
